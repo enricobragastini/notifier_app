@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../models/notify.dart';
 import '../widgets/notification_widget.dart';
+import './add_notification_screen.dart';
 
 class NotificationsScreen extends StatefulWidget {
+  static const String routeName = "/notifications-screen";
   final String appBarTitle;
 
   const NotificationsScreen({Key? key, required this.appBarTitle})
@@ -30,7 +32,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     Notify(
         title: "This is a very long reminder, very important title",
         datetime: DateTime.now().add(const Duration(minutes: 8)),
-        description: "Ricordati di bere acqua")
+        description: "A very long reminder needs a very long description")
   ];
 
   @override
@@ -60,7 +62,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   datetime: notifications[index].datetime);
             }),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(AddNotificationScreen.routeName);
+          },
           child: const Icon(Icons.add),
         ));
   }

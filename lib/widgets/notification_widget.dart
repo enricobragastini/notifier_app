@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NotificationWidget extends StatelessWidget {
   final String title;
@@ -24,7 +25,10 @@ class NotificationWidget extends StatelessWidget {
               children: [
                 const Expanded(
                   flex: 2,
-                  child: Icon(Icons.watch_later_outlined),
+                  child: Icon(
+                    Icons.watch_later_outlined,
+                    size: 38,
+                  ),
                 ),
                 Expanded(
                   flex: 6,
@@ -43,7 +47,7 @@ class NotificationWidget extends StatelessWidget {
                         description,
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
-                      Text(datetime.toString())
+                      Text(DateFormat("dd/MM/yyyy HH:mm").format(datetime))
                     ],
                   ),
                 ),
