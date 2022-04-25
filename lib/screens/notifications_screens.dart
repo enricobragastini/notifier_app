@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/notify.dart';
+import '../providers/notifications_provider.dart';
 import '../widgets/notification_widget.dart';
 import './add_notification_screen.dart';
 
@@ -16,27 +18,11 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-  List<Notify> notifications = [
-    Notify(
-        title: "Bevi l'acqua",
-        datetime: DateTime.now().add(const Duration(minutes: 2)),
-        description: "Ricordati di bere acqua"),
-    Notify(
-        title: "Bevi il vino",
-        datetime: DateTime.now().add(const Duration(minutes: 5)),
-        description: "Ricordati di bere il vino"),
-    Notify(
-        title: "Bevi l'acqua",
-        datetime: DateTime.now().add(const Duration(minutes: 8)),
-        description: "Ricordati di bere acqua"),
-    Notify(
-        title: "This is a very long reminder, very important title",
-        datetime: DateTime.now().add(const Duration(minutes: 8)),
-        description: "A very long reminder needs a very long description")
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final notifications =
+        Provider.of<NotificationsProvider>(context).notifications;
+
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.appBarTitle),

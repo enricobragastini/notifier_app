@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:provider/provider.dart';
+
+import '../models/notify.dart';
+import '../providers/notifications_provider.dart';
 
 class AddNotificationScreen extends StatefulWidget {
   static const String routeName = "/add-notification";
@@ -28,19 +32,37 @@ class _AddNotificationScreenState extends State<AddNotificationScreen> {
     });
   }
 
+  void _addNotification(BuildContext context) {
+    String title = _titleEditingContoller.text;
+    String description = _descriptionEditingContoller.text;
+
+    if (title.isEmpty || description.isEmpty || _selectedDate == null) {
+      return;
+    }
+
+    final Notify notification = Notify(
+        title: title, description: description, datetime: _selectedDate!);
+    Provider.of<NotificationsProvider>(context, listen: false)
+        .addNotification(notification);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text("Add Notification"), actions: [
           IconButton(
             icon: const Icon(Icons.save),
-            onPressed: () {},
+            onPressed: () {
+              print("aggiungo la notifica");
+              _addNotification(context);
+              Navigator.of(context).pop();
+            },
           )
         ]),
         body: Container(
           padding: const EdgeInsets.all(10),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               TextInputWithIconWidget(
                   label: "Title",
@@ -68,19 +90,27 @@ class _AddNotificationScreenState extends State<AddNotificationScreen> {
                           child: Text(
                             (_selectedDate == null)
                                 ? "Choose a datetime!"
-                                : DateFormat("dd/MM/yyyy hh:mm")
+                                : DateFormat("dd/MM/yyyy HH:mm")
                                     .format(_selectedDate!),
                             textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.labelMedium,
                           ),
                         ),
                         Expanded(
                           flex: 3,
-                          child: TextButton(
-                              onPressed: _presentDatePicker,
-                              child: const Text(
-                                "Choose date",
-                                textAlign: TextAlign.center,
-                              )),
+                          child: OutlinedButton(
+                            onPressed: _presentDatePicker,
+                            child: const Text(
+                              "Pick date",
+                              textAlign: TextAlign.center,
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.all(3),
+                              side: BorderSide(
+                                  width: 2.0,
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                          ),
                         )
                       ]))
             ],
