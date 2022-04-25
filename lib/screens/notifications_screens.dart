@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/notify.dart';
 import '../providers/notifications_provider.dart';
 import '../widgets/notification_widget.dart';
 import './add_notification_screen.dart';
@@ -39,14 +38,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             ),
           ],
         ),
-        body: ListView.builder(
-            itemCount: notifications.length,
-            itemBuilder: (context, index) {
-              return NotificationWidget(
-                  title: notifications[index].title,
-                  description: notifications[index].description,
-                  datetime: notifications[index].datetime);
-            }),
+        body: notifications.isEmpty
+            ? Center(
+                child: Text(
+                  "Nothing to show here...\nTry adding a new notification!",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              )
+            : ListView.builder(
+                itemCount: notifications.length,
+                itemBuilder: (context, index) {
+                  return NotificationWidget(
+                      title: notifications[index].title,
+                      description: notifications[index].description,
+                      datetime: notifications[index].datetime);
+                }),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).pushNamed(AddNotificationScreen.routeName);

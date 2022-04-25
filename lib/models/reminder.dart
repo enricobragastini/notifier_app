@@ -1,11 +1,11 @@
 // import 'package:intl/intl.dart';
 
-class Notify {
+class Reminder {
   final String title;
   final String description;
   final DateTime datetime;
 
-  Notify({
+  Reminder({
     required this.title,
     this.description = "",
     required this.datetime,

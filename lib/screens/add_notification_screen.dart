@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../models/notify.dart';
+import '../models/reminder.dart';
 import '../providers/notifications_provider.dart';
 
 class AddNotificationScreen extends StatefulWidget {
@@ -40,10 +40,11 @@ class _AddNotificationScreenState extends State<AddNotificationScreen> {
       return;
     }
 
-    final Notify notification = Notify(
+    final Reminder notification = Reminder(
         title: title, description: description, datetime: _selectedDate!);
     Provider.of<NotificationsProvider>(context, listen: false)
         .addNotification(notification);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -53,9 +54,7 @@ class _AddNotificationScreenState extends State<AddNotificationScreen> {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: () {
-              print("aggiungo la notifica");
               _addNotification(context);
-              Navigator.of(context).pop();
             },
           )
         ]),

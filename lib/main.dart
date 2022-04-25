@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       create: (context) => NotificationsProvider(),
       child: MaterialApp(
         title: 'Notifier',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: Colors.green,
             textTheme: const TextTheme(
